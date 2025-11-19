@@ -7,7 +7,7 @@ import { useAccount, useSwitchChain, useChainId } from "wagmi";
 import { base, baseSepolia, avalanche, avalancheFuji } from "wagmi/chains";
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import { ethers } from "ethers";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/lib/contract";
+import { CONTRACT_ABI, CONTRACT_ADDRESSES } from "@/lib/contract";
 import { useEthersProvider, useEthersSigner } from "@/hooks/useEthers";
 
 type FaucetChain = typeof base | typeof baseSepolia | typeof avalanche | typeof avalancheFuji;
@@ -29,10 +29,10 @@ export default function Faucet() {
 
     const handleMint = useCallback(async () => {
         if (!isConnected || !isMatching) return;
-        const faucetAddress = CONTRACT_ADDRESS;
+        const faucetAddress = CONTRACT_ADDRESSES[selectedId]!;
         try {
             setIsMinting(true);
-      setMintError(null);
+            setMintError(null);
             
             if (!provider || !signer) {
                 throw new Error("Please connect your wallet");
